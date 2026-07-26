@@ -6,19 +6,89 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9508780A301649B500A01C47 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 95087809301649B500A01C47 /* WidgetKit.framework */; };
+		9508780C301649B500A01C47 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9508780B301649B500A01C47 /* SwiftUI.framework */; };
+		9508781D301649B600A01C47 /* TransitWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 95087807301649B500A01C47 /* TransitWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9508781B301649B600A01C47 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 95396EF4300CF73400F1CABD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 95087806301649B500A01C47;
+			remoteInfo = TransitWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		95087822301649B600A01C47 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				9508781D301649B600A01C47 /* TransitWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		95087807301649B500A01C47 /* TransitWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TransitWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		95087809301649B500A01C47 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		9508780B301649B500A01C47 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		95396EFC300CF73400F1CABD /* TransitTrip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TransitTrip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9508781E301649B600A01C47 /* Exceptions for "TransitWidget" folder in "TransitWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 95087806301649B500A01C47 /* TransitWidgetExtension */;
+		};
+		95087824301649EA00A01C47 /* Exceptions for "TransitTrip" folder in "TransitWidgetExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				TransitActivityAttributes.swift,
+			);
+			target = 95087806301649B500A01C47 /* TransitWidgetExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		9508780D301649B500A01C47 /* TransitWidget */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9508781E301649B600A01C47 /* Exceptions for "TransitWidget" folder in "TransitWidgetExtension" target */,
+			);
+			path = TransitWidget;
+			sourceTree = "<group>";
+		};
 		95396EFE300CF73400F1CABD /* TransitTrip */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				95087824301649EA00A01C47 /* Exceptions for "TransitTrip" folder in "TransitWidgetExtension" target */,
+			);
 			path = TransitTrip;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		95087804301649B500A01C47 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9508780C301649B500A01C47 /* SwiftUI.framework in Frameworks */,
+				9508780A301649B500A01C47 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		95396EF9300CF73400F1CABD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -29,10 +99,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		95087808301649B500A01C47 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				95087809301649B500A01C47 /* WidgetKit.framework */,
+				9508780B301649B500A01C47 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		95396EF3300CF73400F1CABD = {
 			isa = PBXGroup;
 			children = (
 				95396EFE300CF73400F1CABD /* TransitTrip */,
+				9508780D301649B500A01C47 /* TransitWidget */,
+				95087808301649B500A01C47 /* Frameworks */,
 				95396EFD300CF73400F1CABD /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +122,7 @@
 			isa = PBXGroup;
 			children = (
 				95396EFC300CF73400F1CABD /* TransitTrip.app */,
+				95087807301649B500A01C47 /* TransitWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +130,28 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		95087806301649B500A01C47 /* TransitWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9508781F301649B600A01C47 /* Build configuration list for PBXNativeTarget "TransitWidgetExtension" */;
+			buildPhases = (
+				95087803301649B500A01C47 /* Sources */,
+				95087804301649B500A01C47 /* Frameworks */,
+				95087805301649B500A01C47 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				9508780D301649B500A01C47 /* TransitWidget */,
+			);
+			name = TransitWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = TransitWidgetExtension;
+			productReference = 95087807301649B500A01C47 /* TransitWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		95396EFB300CF73400F1CABD /* TransitTrip */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 95396F07300CF73500F1CABD /* Build configuration list for PBXNativeTarget "TransitTrip" */;
@@ -55,10 +159,12 @@
 				95396EF8300CF73400F1CABD /* Sources */,
 				95396EF9300CF73400F1CABD /* Frameworks */,
 				95396EFA300CF73400F1CABD /* Resources */,
+				95087822301649B600A01C47 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				9508781C301649B600A01C47 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				95396EFE300CF73400F1CABD /* TransitTrip */,
@@ -80,6 +186,9 @@
 				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
+					95087806301649B500A01C47 = {
+						CreatedOnToolsVersion = 26.6;
+					};
 					95396EFB300CF73400F1CABD = {
 						CreatedOnToolsVersion = 26.6;
 					};
@@ -100,11 +209,19 @@
 			projectRoot = "";
 			targets = (
 				95396EFB300CF73400F1CABD /* TransitTrip */,
+				95087806301649B500A01C47 /* TransitWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		95087805301649B500A01C47 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		95396EFA300CF73400F1CABD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -115,6 +232,13 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		95087803301649B500A01C47 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		95396EF8300CF73400F1CABD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -124,7 +248,73 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		9508781C301649B600A01C47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 95087806301649B500A01C47 /* TransitWidgetExtension */;
+			targetProxy = 9508781B301649B600A01C47 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		95087820301649B600A01C47 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TransitWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TransitWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.priyanshu0007.TransitTrip.TransitWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		95087821301649B600A01C47 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TransitWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = TransitWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.priyanshu0007.TransitTrip.TransitWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		95396F05300CF73500F1CABD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -253,6 +443,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -284,6 +475,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -309,6 +501,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		9508781F301649B600A01C47 /* Build configuration list for PBXNativeTarget "TransitWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95087820301649B600A01C47 /* Debug */,
+				95087821301649B600A01C47 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		95396EF7300CF73400F1CABD /* Build configuration list for PBXProject "TransitTrip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

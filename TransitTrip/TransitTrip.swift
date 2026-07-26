@@ -16,7 +16,7 @@ struct TransitTrip: Identifiable, Codable{
     
     enum VehicleType: String, Codable{
         case metro
-        case bust
+        case bus
     }
     
     var minutesRemaining: Int{

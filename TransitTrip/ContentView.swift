@@ -8,14 +8,83 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var viewModel = TransitViewModel()
+    @State private var activeTripID: UUID?
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            List(viewModel.upcomingTrips) { trip in
+                let isTracking = activeTripID == trip.id
+                TransitRowView(trip: trip)
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
+                    .swipeActions(edge: .trailing){
+                        Button(role: isTracking ? .destructive : .none) {
+                            if isTracking {
+                                viewModel.endLiveActivity()
+                                activeTripID = nil
+                            } else {
+                                viewModel.startLiveActivity(for: trip)
+                                activeTripID = trip.id
+                            }
+                        } label: {
+                            Label(
+                                isTracking ? "Stop" : "Track Live",
+                                systemImage: isTracking ? "xmark.circle" : "timer"
+                            )
+                        }
+                        .tint(isTracking ? .red : .blue)
+                    }
+                    .listStyle(.plain)
+                    .navigationTitle("City Transit")
+            }
+        }
+    }
+}
+
+
+struct TransitRowView: View{
+    let trip: TransitTrip
+    var body: some View{
+        HStack(spacing: 16){
+            
+            // Icon Indicator
+            Image(systemName: trip.vehicleType == .metro ? "tram.fill" : "bus.fill")
+                .font(.title2)
+                .foregroundColor(.white)
+                .frame(width: 48, height: 48)
+                .background(trip.vehicleType == .metro ? Color.blue : Color.orange)
+                .cornerRadius(12)
+            
+            // Route Details
+            VStack(alignment: .leading, spacing: 4) {
+                Text(trip.lineName)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                Text("To \(trip.destination)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+            
+            Spacer()
+            
+            // Time Badge
+            VStack(alignment: .trailing) {
+                Text("\(trip.minutesRemaining)")
+                    .font(.title2)
+                    .fontWeight(.black)
+                    .foregroundColor(.primary)
+                Text("mins")
+                    .font(.caption)
+                    .textCase(.uppercase)
+                    .foregroundColor(.secondary)
+            }
         }
         .padding()
+        .background(Color(.systemBackground))
+        .cornerRadius(16)
+        .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
     }
 }
 
