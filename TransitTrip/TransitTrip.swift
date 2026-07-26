@@ -19,8 +19,8 @@ struct TransitTrip: Identifiable, Codable{
         case bus
     }
     
-    var minutesRemaining: Int{
-        let difference = estimatedArrival.timeIntervalSince(Date())
-        return max(0, Int(difference/60))
+    func minutesRemaining(relativeTo date: Date = Date()) -> Int {
+        let difference = estimatedArrival.timeIntervalSince(date)
+        return max(0, Int(difference / 60))
     }
 }

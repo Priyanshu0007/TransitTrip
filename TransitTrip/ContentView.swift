@@ -10,23 +10,20 @@ import SwiftUI
 struct ContentView: View {
     
     @State private var viewModel = TransitViewModel()
-    @State private var activeTripID: UUID?
     
     var body: some View {
         NavigationStack {
             List(viewModel.upcomingTrips) { trip in
-                let isTracking = activeTripID == trip.id
-                TransitRowView(trip: trip)
+                let isTracking = viewModel.activeTripID == trip.id
+                TransitRowView(trip: trip, now: viewModel.now)
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
-                    .swipeActions(edge: .trailing){
-                        Button(role: isTracking ? .destructive : .none) {
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        Button {
                             if isTracking {
                                 viewModel.endLiveActivity()
-                                activeTripID = nil
                             } else {
                                 viewModel.startLiveActivity(for: trip)
-                                activeTripID = trip.id
                             }
                         } label: {
                             Label(
@@ -36,18 +33,20 @@ struct ContentView: View {
                         }
                         .tint(isTracking ? .red : .blue)
                     }
-                    .listStyle(.plain)
-                    .navigationTitle("City Transit")
             }
+            .listStyle(.plain)
+            .navigationTitle("City Transit")
         }
     }
 }
 
 
-struct TransitRowView: View{
+struct TransitRowView: View {
     let trip: TransitTrip
-    var body: some View{
-        HStack(spacing: 16){
+    let now: Date
+    
+    var body: some View {
+        HStack(spacing: 16) {
             
             // Icon Indicator
             Image(systemName: trip.vehicleType == .metro ? "tram.fill" : "bus.fill")
@@ -71,7 +70,7 @@ struct TransitRowView: View{
             
             // Time Badge
             VStack(alignment: .trailing) {
-                Text("\(trip.minutesRemaining)")
+                Text("\(trip.minutesRemaining(relativeTo: now))")
                     .font(.title2)
                     .fontWeight(.black)
                     .foregroundColor(.primary)

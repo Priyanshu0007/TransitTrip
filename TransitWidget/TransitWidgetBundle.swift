@@ -11,8 +11,6 @@ import SwiftUI
 @main
 struct TransitWidgetBundle: WidgetBundle {
     var body: some Widget {
-        TransitWidget()
-        TransitWidgetControl()
         TransitWidgetLiveActivity()
     }
 }

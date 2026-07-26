@@ -9,6 +9,7 @@ import Foundation
 import ActivityKit
 
 
+@MainActor
 @Observable
 class TransitViewModel {
     var upcomingTrips: [TransitTrip] = []
@@ -16,9 +17,10 @@ class TransitViewModel {
     // 1. Declare the stored property so SwiftUI detects updates every second
     var now: Date = Date()
     
-    private var timer: Timer?
+    var activeTripID: UUID?
     
-        
+    @ObservationIgnored nonisolated(unsafe) private var timer: Timer?
+    
     private func loadMockData() {
         let current = Date()
         upcomingTrips = [
@@ -48,19 +50,24 @@ class TransitViewModel {
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            self.now = Date()
-            for trip in self.upcomingTrips {
-                if trip.estimatedArrival <= self.now {
-                    self.endLiveActivity()
+            Task { @MainActor [weak self] in
+                guard let self = self else { return }
+                self.now = Date()
+                
+                if let activeTripID = self.activeTripID,
+                   let activeTrip = self.upcomingTrips.first(where: { $0.id == activeTripID }) {
+                    if activeTrip.estimatedArrival <= self.now {
+                        self.endLiveActivity()
+                    }
                 }
             }
         }
     }
     
-    
-    // Add inside TransitViewModel:
     func startLiveActivity(for trip: TransitTrip) {
+        // End any currently running activity first
+        endLiveActivity()
+        
         // Check if Live Activities are supported/enabled on the device
         guard ActivityAuthorizationInfo().areActivitiesEnabled else {
             print("Live Activities are not enabled.")
@@ -82,6 +89,7 @@ class TransitViewModel {
                 attributes: attributes,
                 content: .init(state: initialContentState, staleDate: nil)
             )
+            activeTripID = trip.id
             print("Started Live Activity with ID: \(activity.id)")
         } catch {
             print("Error starting Live Activity: \(error.localizedDescription)")
@@ -109,6 +117,7 @@ class TransitViewModel {
     }
     
     func endLiveActivity() {
+        activeTripID = nil
         Task {
             for activity in Activity<TransitActivityAttributes>.activities {
                 // Create a final state content update for dismissal
@@ -119,7 +128,8 @@ class TransitViewModel {
                             
                 // Use the updated API: end(content:dismissalPolicy:)
                 await activity.end(finalContent, dismissalPolicy: .immediate)
-                print("Ended Activity: \(activity.id)")            }
+                print("Ended Activity: \(activity.id)")
+            }
         }
     }
 

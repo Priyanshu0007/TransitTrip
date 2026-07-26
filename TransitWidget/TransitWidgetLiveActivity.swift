@@ -89,16 +89,16 @@ struct TransitWidgetLiveActivity: Widget {
                 }
                 
             } compactLeading: {
-                Image(systemName: "tram.fill")
-                    .foregroundColor(.blue)
+                Image(systemName: context.attributes.vehicleType == "metro" ? "tram.fill" : "bus.fill")
+                    .foregroundColor(context.attributes.vehicleType == "metro" ? .blue : .orange)
             } compactTrailing: {
                 Text(context.state.estimatedArrival, style: .timer)
                     .monospacedDigit()
                     .frame(width: 40)
                     .font(.caption2)
             } minimal: {
-                Image(systemName: "tram.fill")
-                    .foregroundColor(.blue)
+                Image(systemName: context.attributes.vehicleType == "metro" ? "tram.fill" : "bus.fill")
+                    .foregroundColor(context.attributes.vehicleType == "metro" ? .blue : .orange)
             }
         }
     }
