@@ -40,10 +40,24 @@ class TransitViewModel {
             ),
             TransitTrip(
                 id: UUID(),
-                lineName: "Rapid Metro",
-                destination: "Cyber City",
-                estimatedArrival: current.addingTimeInterval(900), // 15 mins from now
-                vehicleType: .metro
+                lineName: "Vande Bharat Express",
+                destination: "New Delhi Central",
+                estimatedArrival: current.addingTimeInterval(720), // 12 mins from now
+                vehicleType: .train
+            ),
+            TransitTrip(
+                id: UUID(),
+                lineName: "Harbor Line Ferry",
+                destination: "North Pier Marina",
+                estimatedArrival: current.addingTimeInterval(1080), // 18 mins from now
+                vehicleType: .ferry
+            ),
+            TransitTrip(
+                id: UUID(),
+                lineName: "Skyline Cable Car",
+                destination: "Mountain Ridge Peak",
+                estimatedArrival: current.addingTimeInterval(1500), // 25 mins from now
+                vehicleType: .cableCar
             )
         ]
     }

@@ -15,7 +15,7 @@ struct ContentView: View {
         NavigationStack {
             List(viewModel.upcomingTrips) { trip in
                 let isTracking = viewModel.activeTripID == trip.id
-                TransitRowView(trip: trip, now: viewModel.now)
+                TransitRowView(trip: trip, now: viewModel.now, isTracking: isTracking)
                     .listRowSeparator(.hidden)
                     .listRowBackground(Color.clear)
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
@@ -36,6 +36,7 @@ struct ContentView: View {
             }
             .listStyle(.plain)
             .navigationTitle("City Transit")
+            .sensoryFeedback(.selection, trigger: viewModel.activeTripID)
         }
     }
 }
@@ -44,23 +45,38 @@ struct ContentView: View {
 struct TransitRowView: View {
     let trip: TransitTrip
     let now: Date
+    var isTracking: Bool = false
     
     var body: some View {
         HStack(spacing: 16) {
             
             // Icon Indicator
-            Image(systemName: trip.vehicleType == .metro ? "tram.fill" : "bus.fill")
+            Image(systemName: trip.vehicleType.iconName)
                 .font(.title2)
                 .foregroundColor(.white)
                 .frame(width: 48, height: 48)
-                .background(trip.vehicleType == .metro ? Color.blue : Color.orange)
+                .background(trip.vehicleType.badgeColor)
                 .cornerRadius(12)
+                .shadow(color: trip.vehicleType.badgeColor.opacity(0.3), radius: 4, x: 0, y: 2)
             
             // Route Details
             VStack(alignment: .leading, spacing: 4) {
-                Text(trip.lineName)
-                    .font(.headline)
-                    .fontWeight(.bold)
+                HStack(spacing: 6) {
+                    Text(trip.lineName)
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    
+                    if isTracking {
+                        Text("LIVE")
+                            .font(.caption2.weight(.heavy))
+                            .padding(.horizontal, 6)
+                            .padding(.vertical, 2)
+                            .background(Color.red.opacity(0.15))
+                            .foregroundColor(.red)
+                            .clipShape(Capsule())
+                    }
+                }
+                
                 Text("To \(trip.destination)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
@@ -81,9 +97,23 @@ struct TransitRowView: View {
             }
         }
         .padding()
-        .background(Color(.systemBackground))
-        .cornerRadius(16)
-        .shadow(color: Color.black.opacity(0.05), radius: 8, x: 0, y: 4)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(
+                    LinearGradient(
+                        colors: [
+                            Color(hue: 0.58, saturation: 0.7, brightness: 0.95, opacity: isTracking ? 0.8 : 0.45),
+                            Color(hue: 0.75, saturation: 0.6, brightness: 0.9, opacity: isTracking ? 0.6 : 0.2),
+                            Color(hue: 0.92, saturation: 0.7, brightness: 0.95, opacity: isTracking ? 0.75 : 0.35)
+                        ],
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    ),
+                    lineWidth: isTracking ? 2 : 1.25
+                )
+        )
+        .shadow(color: isTracking ? Color.blue.opacity(0.25) : Color.black.opacity(0.06), radius: isTracking ? 12 : 8, x: 0, y: 4)
     }
 }
 

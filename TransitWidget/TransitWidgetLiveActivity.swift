@@ -9,11 +9,42 @@ import WidgetKit
 import SwiftUI
 import ActivityKit
 
+extension TransitActivityAttributes {
+    var vehicleIconName: String {
+        switch vehicleType.lowercased() {
+        case "metro": return "tram.fill"
+        case "bus": return "bus.fill"
+        case "train": return "train.side.front.car"
+        case "ferry": return "ferry.fill"
+        case "cablecar", "cable_car": return "cablecar"
+        default: return "tram.fill"
+        }
+    }
+    
+    var vehicleColor: Color {
+        switch vehicleType.lowercased() {
+        case "metro": return .blue
+        case "bus": return .orange
+        case "train": return .indigo
+        case "ferry": return .teal
+        case "cablecar", "cable_car": return .pink
+        default: return .blue
+        }
+    }
+}
+
 struct TransitWidgetLiveActivity: Widget {
     var body: some WidgetConfiguration {
         ActivityConfiguration(for: TransitActivityAttributes.self) { context in
             // Lock Screen & Notification Center Banner UI
-            HStack {
+            HStack(spacing: 12) {
+                Image(systemName: context.attributes.vehicleIconName)
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .frame(width: 40, height: 40)
+                    .background(context.attributes.vehicleColor)
+                    .cornerRadius(10)
+                
                 VStack(alignment: .leading, spacing: 4) {
                     Text(context.attributes.lineName)
                         .font(.headline)
@@ -30,7 +61,7 @@ struct TransitWidgetLiveActivity: Widget {
                         .font(.title2)
                         .fontWeight(.black)
                         .monospacedDigit()
-                        .foregroundColor(.blue)
+                        .foregroundColor(context.attributes.vehicleColor)
                     Text("ARRIVING")
                         .font(.caption2)
                         .fontWeight(.bold)
@@ -46,9 +77,9 @@ struct TransitWidgetLiveActivity: Widget {
                 // Fixed: Clear leading alignment with specific color coding
                 DynamicIslandExpandedRegion(.leading) {
                     HStack(alignment: .center, spacing: 10) {
-                        Image(systemName: context.attributes.vehicleType == "metro" ? "tram.fill" : "bus.fill")
+                        Image(systemName: context.attributes.vehicleIconName)
                             .font(.title2)
-                            .foregroundColor(context.attributes.vehicleType == "metro" ? Color.blue : Color.orange)
+                            .foregroundColor(context.attributes.vehicleColor)
                         
                         VStack(alignment: .leading, spacing: 2) {
                             Text(context.attributes.lineName)
@@ -65,14 +96,13 @@ struct TransitWidgetLiveActivity: Widget {
                     Text(context.state.estimatedArrival, style: .timer)
                         .font(.system(.title2, design: .rounded, weight: .bold))
                         .monospacedDigit()
-                        .foregroundColor(.blue)
+                        .foregroundColor(context.attributes.vehicleColor)
                         .padding(.trailing, 8)
                 }
                 
                 // Fixed: Corrected text color (white) and alignment
                 DynamicIslandExpandedRegion(.bottom) {
                     HStack {
-                        // The text "Bound for..." is now white (.primary), not dark grey
                         Text("Bound for \(context.attributes.destination)")
                             .font(.system(.caption, design: .rounded))
                             .fontWeight(.medium)
@@ -89,16 +119,16 @@ struct TransitWidgetLiveActivity: Widget {
                 }
                 
             } compactLeading: {
-                Image(systemName: context.attributes.vehicleType == "metro" ? "tram.fill" : "bus.fill")
-                    .foregroundColor(context.attributes.vehicleType == "metro" ? .blue : .orange)
+                Image(systemName: context.attributes.vehicleIconName)
+                    .foregroundColor(context.attributes.vehicleColor)
             } compactTrailing: {
                 Text(context.state.estimatedArrival, style: .timer)
                     .monospacedDigit()
                     .frame(width: 40)
                     .font(.caption2)
             } minimal: {
-                Image(systemName: context.attributes.vehicleType == "metro" ? "tram.fill" : "bus.fill")
-                    .foregroundColor(context.attributes.vehicleType == "metro" ? .blue : .orange)
+                Image(systemName: context.attributes.vehicleIconName)
+                    .foregroundColor(context.attributes.vehicleColor)
             }
         }
     }
