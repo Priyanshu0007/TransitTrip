@@ -12,5 +12,10 @@ import SwiftUI
 struct TransitWidgetBundle: WidgetBundle {
     var body: some Widget {
         TransitWidgetLiveActivity()
+        TransitWidget()
+        if #available(iOS 18.0, *) {
+            TransitWidgetControl()
+        }
     }
 }
+
