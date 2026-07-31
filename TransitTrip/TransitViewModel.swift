@@ -14,6 +14,21 @@ import ActivityKit
 class TransitViewModel {
     var upcomingTrips: [TransitTrip] = []
     
+    var searchText: String = ""
+    var selectedVehicleType: TransitTrip.VehicleType? = nil
+    
+    var filteredTrips: [TransitTrip] {
+        upcomingTrips.filter { trip in
+            let matchesSearch = searchText.isEmpty ||
+                trip.lineName.localizedCaseInsensitiveContains(searchText) ||
+                trip.destination.localizedCaseInsensitiveContains(searchText)
+            
+            let matchesType = selectedVehicleType == nil || trip.vehicleType == selectedVehicleType
+            
+            return matchesSearch && matchesType
+        }
+    }
+    
     // 1. Declare the stored property so SwiftUI detects updates every second
     var now: Date = Date()
     
